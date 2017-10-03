@@ -43,9 +43,9 @@ void distances(int n, int m, coord point[], int edge[][3]){
 void readDist(int m, int edge[][3], coord point[]){
   for(int i=0;i<m;i++){
     cout<<"readDist_"<<i+1<<" : "<<endl;
-    cout<<"   Point_A = X: "<<point[edge[i][0]].abs<<" Y: "<<point[edge[i][0]].ord<<endl;
-    cout<<"   Point_B = X: "<<point[edge[i][1]].abs<<" Y: "<<point[edge[i][1]].ord<<endl;
-    cout<<"   Distance_A_B = "<<edge[i][2]<<endl;
+    cout<<"   Point_"<<edge[i][0]<<" = X: "<<point[edge[i][0]].abs<<" Y: "<<point[edge[i][0]].ord<<endl;
+    cout<<"   Point_"<<edge[i][1]<<" = X: "<<point[edge[i][1]].abs<<" Y: "<<point[edge[i][1]].ord<<endl;
+    cout<<"   Distance_"<<edge[i][0]<<"_"<<edge[i][1]<<" = "<<edge[i][2]<<endl;
   }
   return;
 }
@@ -62,7 +62,6 @@ int main(){
   pointrandom(n, point);
   readcoord(n, point);
   distances(n, m, point, edge);
-  cout<<endl;
   readDist(m, edge, point);
   return 0;
 }
