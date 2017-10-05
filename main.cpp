@@ -9,6 +9,48 @@
 using namespace std;
 typedef struct coord{int abs; int ord;} coord;
 
+
+void echanger(int tableau[][3], int a, int b)
+{
+    int temp_0 = tableau[a][0];
+    int temp_1 = tableau[a][1];
+    int temp_2 = tableau[a][2];
+
+    tableau[a][0] = tableau[b][0];
+    tableau[a][1] = tableau[b][1];
+    tableau[a][2] = tableau[b][2];
+    tableau[b][0] = temp_0;
+    tableau[b][1] = temp_1;
+    tableau[b][2] = temp_2;
+}
+
+void quickSort(int tableau[][3], int debut, int fin)
+{
+    int gauche = debut-1;
+    int droite = fin+1;
+    const int pivot = tableau[debut][2];
+
+    if(debut >= fin)
+        return;
+
+    while(1)
+    {
+        do droite--; while(tableau[droite][2] > pivot);
+        do gauche++; while(tableau[gauche][2] < pivot);
+
+        if(gauche < droite)
+            echanger(tableau, gauche, droite);
+        else break;
+    }
+    quickSort(tableau, debut, droite);
+    quickSort(tableau, droite+1, fin);
+}
+
+void tri(int m, int edge[][3]){
+  quickSort(edge, 0, m-1);
+  return;
+}
+
 void pointrandom(int n, coord point[]){
   srand (time(NULL));
   for(int i=0;i<n;i++){
@@ -32,7 +74,7 @@ void distances(int n, int m, coord point[], int edge[][3]){
       if(i<j){
         edge[k][0]=i;
         edge[k][1]=j;
-        edge[k][2]=sqrt((pow((point[j].abs-point[i].abs),2))+(pow((point[j].ord-point[i].ord),2)));
+        edge[k][2]=(pow((point[j].abs-point[i].abs),2))+(pow((point[j].ord-point[i].ord),2));
         k++;
       }
     }
@@ -63,5 +105,8 @@ int main(){
   readcoord(n, point);
   distances(n, m, point, edge);
   readDist(m, edge, point);
+  tri(m, edge);
+  readDist(m, edge, point);
+
   return 0;
 }
