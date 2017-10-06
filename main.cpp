@@ -5,9 +5,10 @@
 #include <time.h>
 #include <stdlib.h>
 #include <math.h>
+#include "Affichage.cpp"
 
 using namespace std;
-typedef struct coord{int abs; int ord;} coord;
+//typedef struct coord{int abs; int ord;} coord;
 
 
 void echanger(int tableau[][3], int a, int b)
@@ -92,6 +93,27 @@ void readDist(int m, int edge[][3], coord point[]){
   return;
 }
 
+void kruskal(int n, int edge[][3], int arbre[][2]){
+  int comp[n];
+  for(int i=0;i<n;i++){
+    comp[i]=i;
+  }
+
+  for(int i=0;i<n;i++){
+    if(comp[edge[i][0]]!=comp[edge[i][1]]){
+      int aux= comp[edge[i][0]];
+      arbre[i][0]=edge[i][0];
+      arbre[i][1]=edge[i][1];
+      for(int j=0;j<n;j++){
+        if(comp[j]==aux){
+          comp[j]=comp[edge[i][1]];
+        }
+      }
+    }
+  }
+  return;
+}
+
 int main(){
   int n;  //nombre de pts
   cout<<"Entrer le nombre de points: ";
@@ -104,9 +126,9 @@ int main(){
   pointrandom(n, point);
   readcoord(n, point);
   distances(n, m, point, edge);
-  readDist(m, edge, point);
   tri(m, edge);
   readDist(m, edge, point);
-
+  kruskal(n, edge, arbre);
+  AffichageGraphique(n,point,arbre);
   return 0;
 }
