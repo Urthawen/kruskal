@@ -71,13 +71,13 @@ void readcoord(int n, coord point[]){
 void distances(int n, int m, coord point[], int edge[][3]){
   int k=0;
   for(int i=0;i<n;i++){
-    for(int j=0;j<n;j++){
-      if(i<j){
+    for(int j=i+1;j<n;j++){
+
         edge[k][0]=i;
         edge[k][1]=j;
         edge[k][2]=(pow((point[j].abs-point[i].abs),2))+(pow((point[j].ord-point[i].ord),2));
         k++;
-      }
+
     }
   }
   return;
@@ -98,12 +98,14 @@ void kruskal(int n, int edge[][3], int arbre[][2]){
   for(int i=0;i<n;i++){
     comp[i]=i;
   }
-
-  for(int i=0;i<n;i++){
+  int k=0;
+  int m = (n*(n-1))/2;
+  for(int i=0;i<m;i++){
     if(comp[edge[i][0]]!=comp[edge[i][1]]){
       int aux= comp[edge[i][0]];
-      arbre[i][0]=edge[i][0];
-      arbre[i][1]=edge[i][1];
+      arbre[k][0]=edge[i][0];
+      arbre[k][1]=edge[i][1];
+      k++;
       for(int j=0;j<n;j++){
         if(comp[j]==aux){
           comp[j]=comp[edge[i][1]];
@@ -124,11 +126,12 @@ int main(){
   int arbre[n-1][2]; //Les aretes de l'arbre de Kruskal
 
   pointrandom(n, point);
-  readcoord(n, point);
+  //readcoord(n, point);
   distances(n, m, point, edge);
   tri(m, edge);
-  readDist(m, edge, point);
+  //readDist(m, edge, point);
   kruskal(n, edge, arbre);
   AffichageGraphique(n,point,arbre);
+  cout<<"fin"<<endl;
   return 0;
 }
