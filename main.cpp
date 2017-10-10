@@ -116,6 +116,37 @@ void kruskal(int n, int edge[][3], int arbre[][2]){
   return;
 }
 
+void compOpti(int n, int edge[][3]){
+  int comp[n];
+  int t[n];
+  vector<int> vect[n];
+
+  for(int i=0;i<n;i++){
+    comp[i]=i;
+    vect[i].push_back(i);
+    t[i]=1;
+  }
+
+  int m= (n*(n-1))/2;
+
+  for(int i=0;i<m;i++){
+    if(comp[edge[i][0]]!=comp[edge[i][1]]){
+      if(t[comp[edge[i][0]]] > t[comp[edge[i][1]]]){
+        swap(edge[i][0],edge[i][1]);
+      }
+      int aux = comp[i];
+      t[comp[edge[0][1]]] = t[comp[edge[0][1]]]+t[aux];
+
+      for(int i=0;i<vect[n].size();i++){
+        comp[i]=comp[edge[i][1]];
+        vect[comp[edge[i][1]]].push_back(i);
+        vect[aux].pop_back();
+      }
+    }
+  }
+
+}
+
 int main(){
   int n;  //nombre de pts
   cout<<"Entrer le nombre de points: ";
